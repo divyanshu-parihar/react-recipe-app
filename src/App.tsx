@@ -2,11 +2,15 @@ import { FormEvent, FormEventHandler, useEffect, useState } from 'react';
 import getRecipies from './utils/getRecipies';
 import './App.css'
 import Recipe from './components/Recipe';
+import dotenv from 'dotenv';
+import {props} from './components/Recipe'
+dotenv.config();
 type recipe = {
   recipe: {
     uri: string;
     label: string;
     image: string;
+    recipe:props
     calories: number;
     ingredients: [{
       text: string,
@@ -18,35 +22,42 @@ type recipe = {
       foodId: string,
       image: string
     }]
+    url:string;
   }
 }
 
 
 function App() {
   const [recipes, setRecipes] = useState<[]>([]);
-  const [query, setQuery] = useState<string>('chicken');
+  const [query, setQuery] = useState<string>('pasta');
   const [loading, setloading] = useState(true)
+  const [buttonText, setButtonText] = useState("submit");
   const handleSubmit: FormEventHandler<HTMLFormElement> = (e: FormEvent) => {
     e.preventDefault();
     setloading(true);
-    getRecipies(query, "5eebe68b", "9764673ef850323778f542dc200048d1", setRecipes);
+    setButtonText("Loading");
+    getRecipies(query, process.env.REACT_APP_API_APP_ID!, process.env.REACT_APP_API_APP_SECRET!, setRecipes);
+    setButtonText("Submit");
     setloading(false);
 
   }
   useEffect(() => {
-    getRecipies("chicken", "5eebe68b", "9764673ef850323778f542dc200048d1", setRecipes);
+    setloading(true);
+    setButtonText("Loading");
+    getRecipies(query, process.env.REACT_APP_API_APP_ID!, process.env.REACT_APP_API_APP_SECRET!, setRecipes);
+    
     setloading(false);
-  }, [])
+    setButtonText("Submit")
+  },[])
   return (
     <div className="App">
       <form className="search-form" onSubmit={handleSubmit}>
         <input className="search-bar" type='text' onChange={(e) => setQuery(e.target.value)} placeholder="search"></input>
-        <button className="search-button" type='submit' disabled={loading}>submit</button>
+        <button className="search-button" type='submit' disabled={loading} value={!loading?"submit":"loading"}>{buttonText}</button>
       </form>
-      {recipes.map((recipe: recipe) => {
-        // console.log(recipe.label)
-        return <Recipe image={recipe.recipe.image} ingredients={recipe.recipe.ingredients} calories={recipe.recipe.calories} title={recipe.recipe.label} key={recipe.recipe.label} />;
-      })}
+      {!loading ?(recipes.map((recipe: recipe) => {
+        return <Recipe url={recipe.recipe.url} image={recipe.recipe.image} ingredients={recipe.recipe.ingredients} calories={recipe.recipe.calories} title={recipe.recipe.label} key={recipe.recipe.label} />;
+      })):<p>Developer is just lazy to add a loading state . Sorry!</p>}
     </div>
   );
 }

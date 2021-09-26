@@ -15,19 +15,21 @@ export type props = {
         foodCategory: string,
         foodId: string,
         image: string
-    }]
+    }],
+    url:string
 }
 
-const Recipe = ({ title, calories, image, ingredients }: props) => {
+const Recipe = ({ title, calories, image, ingredients ,url}: props) => {
     return (
         <div className={style.recipe}>
             <h1>{title}</h1>
             <ol>
                 {ingredients.map(ingredient => (
-                    <li>{ingredient.text}</li>
+                    <div dangerouslySetInnerHTML={{__html: `<b>${ingredient.text}</b>`}} />
                 ))}
             </ol>
             <p>Calories: {calories}</p>
+            <a href={url} target="_blank" rel="noreferrer">Teach me </a>
             <img className={style.image} src={image} alt="" />
         </div>
     );
