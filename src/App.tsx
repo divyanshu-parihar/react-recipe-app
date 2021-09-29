@@ -42,7 +42,6 @@ function App() {
 
   }
   useEffect(() => {
-    setloading(state => !state);
     setButtonText("Loading");
     getRecipies("pasta", process.env.REACT_APP_API_APP_ID!, process.env.REACT_APP_API_APP_SECRET!, setRecipes);
     
