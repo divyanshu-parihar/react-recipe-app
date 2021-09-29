@@ -44,12 +44,11 @@ function App() {
   useEffect(() => {
     setloading(state => !state);
     setButtonText("Loading");
-    getRecipies(query, process.env.REACT_APP_API_APP_ID!, process.env.REACT_APP_API_APP_SECRET!, setRecipes);
+    getRecipies("pasta", process.env.REACT_APP_API_APP_ID!, process.env.REACT_APP_API_APP_SECRET!, setRecipes);
     
     setloading(state => !state);
     setButtonText("Loading");
     setButtonText("Submit")
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   },[])
   return (
     <div className="App">
