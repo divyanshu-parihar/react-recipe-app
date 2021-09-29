@@ -31,7 +31,7 @@ function App() {
   const [recipes, setRecipes] = useState<[]>([]);
   const [query, setQuery] = useState<string>('pasta');
   const [loading, setloading] = useState(true)
-  const [buttonText, setButtonText] = useState("submit");
+  const [buttonText, setButtonText] = useState("loading");
   const handleSubmit: FormEventHandler<HTMLFormElement> = (e: FormEvent) => {
     e.preventDefault();
     setloading(true);
