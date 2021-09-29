@@ -53,7 +53,7 @@ function App() {
     <div className="App">
       <form className="search-form" onSubmit={handleSubmit}>
         <input className="search-bar" type='text' onChange={(e) => setQuery(e.target.value)} placeholder="search"></input>
-        <button className="search-button" type='submit' disabled={loading} value={buttonText}>{buttonText}</button>
+        <button className="search-button" type='submit' color={loading?"white":"red"} disabled={loading} value={buttonText}>{buttonText}</button>
       </form>
       {!loading ?(recipes.map((recipe: recipe) => {
         return <Recipe url={recipe.recipe.url} image={recipe.recipe.image} ingredients={recipe.recipe.ingredients} calories={recipe.recipe.calories} title={recipe.recipe.label} key={recipe.recipe.label} />;
