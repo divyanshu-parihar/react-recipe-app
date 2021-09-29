@@ -3,13 +3,13 @@ const getRecipies = async (
   APP_ID: string,
   APP_KEY: string,
   setRecipes: Function
-) => {
+):Promise<void> => {
   const response = await fetch(
     `https://api.edamam.com/search?q=${query}&app_id=${APP_ID}&app_key=${APP_KEY}`
   );
   const data = await response.json();
   setRecipes(data.hits);
-
+  
 };
 
 export default getRecipies;
