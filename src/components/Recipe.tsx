@@ -1,7 +1,7 @@
 
 import React from 'react';
 import style from '../modules/recipe.module.css';
-
+import {Button} from "./btn";
 export type props = {
     title: string,
     calories: number,
@@ -29,7 +29,7 @@ const Recipe = ({ title, calories, image, ingredients ,url}: props) => {
                 ))}
             </ol>
             <p>Calories: {calories}</p>
-            <a href={url} target="_blank" rel="noreferrer">Teach me </a>
+            <Button url={url}></Button>
             <img className={style.image} src={image} alt="" />
         </div>
     );
