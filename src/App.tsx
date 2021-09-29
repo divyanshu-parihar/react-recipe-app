@@ -42,18 +42,20 @@ function App() {
 
   }
   useEffect(() => {
-    setloading(true);
+    setloading(state => !state);
     setButtonText("Loading");
     getRecipies(query, process.env.REACT_APP_API_APP_ID!, process.env.REACT_APP_API_APP_SECRET!, setRecipes);
     
-    setloading(false);
+    setloading(state => !state);
+    setButtonText("Loading");
     setButtonText("Submit")
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   },[])
   return (
     <div className="App">
       <form className="search-form" onSubmit={handleSubmit}>
         <input className="search-bar" type='text' onChange={(e) => setQuery(e.target.value)} placeholder="search"></input>
-        <button className="search-button" type='submit' disabled={loading} value={!loading?"submit":"loading"}>{buttonText}</button>
+        <button className="search-button" type='submit' disabled={loading} value={buttonText}>{buttonText}</button>
       </form>
       {!loading ?(recipes.map((recipe: recipe) => {
         return <Recipe url={recipe.recipe.url} image={recipe.recipe.image} ingredients={recipe.recipe.ingredients} calories={recipe.recipe.calories} title={recipe.recipe.label} key={recipe.recipe.label} />;
